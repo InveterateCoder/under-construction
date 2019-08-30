@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <title>Arthur Grigoryan</title>
+        <link rel="icon" href="icon.png" type="image/png">
+        <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet">
+        <style>
+            body {
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+            body > div:first-child {
+                position: absolute;
+                top:0; right: 0; bottom: 0; left: 0;
+                background-image: url(Desert-Crater.jpg);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+            }
+            body > div:first-child > video {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            #panel {
+                height: 50%;
+                min-height: 250px;
+                position: fixed;
+                left:0;
+                right: 0;
+                top:50%;
+                transform: translateY(-50%);
+                background-color: rgba(0,0,0,.3);
+                font-family: 'Vollkorn', serif;
+                box-shadow: 0 0 15px 2px black;
+            }
+            #panel > div:first-child {
+                height: 20%;
+                font-size: 4.5vh;
+                color: white;
+                text-align: center;
+                text-shadow: 0 0 5px black;
+                white-space: nowrap;
+            }
+            #panel > div:nth-child(2) {
+                display: flex;
+                height: 80%;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            #panel > div:nth-child(2) > div {
+                margin:0 15px;
+                width: 20%;
+                height: 50%;
+                min-width: 150px;
+                white-space: nowrap;
+                text-align: center;
+            }
+            #panel > div:nth-child(2) > div > div:first-child > div {
+                display: inline-block;
+                font-size: 6vh;
+                font-family: monospace;
+                line-height: 0.5;
+                padding: 15px;
+                background-color: rgba(64,64,64,.4);
+                box-shadow: 0 0 3px 1px black;
+                text-align: center;
+                font-weight: bold;
+                color:white;
+                margin:3px;
+                text-shadow: 0 0 5px black;
+            }
+            #panel > div:nth-child(2) > div > div:nth-child(2) {
+                color:white;
+                margin-top: 10px;
+                text-align: center;
+                font-size: 2.7vh;
+                text-shadow: 0 0 10px black;
+            }
+            @media only screen and (max-height: 600px){
+                #panel > div:first-child {
+                    font-size:27px;
+                }
+                #panel > div:nth-child(2) > div > div:first-child > div {
+                    font-size: 36px;
+                }
+                #panel > div:nth-child(2) > div > div:nth-child(2) {
+                    font-size: 16px;
+                }
+            } 
+        </style>
+    </head>
+    <body>
+        <div>
+            <video autoplay muted loop>
+                <source src="Desert-Crater.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div id="panel">
+            <div>Under Construction</div>
+            <div>
+                <div>
+                    <div>
+                        <div id="d2">0</div>
+                        <div id="d1">0</div>
+                    </div>
+                    <div>Days</div>
+                </div>
+                <div>
+                    <div>
+                        <div id="h2">0</div>
+                        <div id="h1">0</div>
+                    </div>
+                    <div>Hours</div>
+                </div>
+                <div>
+                    <div>
+                        <div id="m2">0</div>
+                        <div id="m1">0</div>
+                    </div>
+                    <div>Minutes</div>
+                </div>
+                <div>
+                    <div>
+                        <div id="s2">0</div>
+                        <div id="s1">0</div>
+                    </div>
+                    <div>Seconds</div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var vid = document.querySelector("body > div:first-child > video");
+            var days = [document.getElementById("d1"), document.getElementById("d2")];
+            var hours = [document.getElementById("h1"), document.getElementById("h2")];
+            var minutes = [document.getElementById("m1"), document.getElementById("m2")];
+            var seconds = [document.getElementById("s1"), document.getElementById("s2")];
+            function writeTime(){
+                let timePassed = new Date(Date.now() - 1567158178825);
+                let daysLoc = Math.floor(timePassed.getTime()/86400000).toString();
+                let hoursLoc = timePassed.getHours().toString();
+                let minutesLoc = timePassed.getMinutes().toString();
+                let secondsLoc = timePassed.getSeconds().toString();
+                for(let j = 0; j < 2; j++){
+                    days[j].textContent = daysLoc[daysLoc.length - j - 1] || '0';
+                    hours[j].textContent = hoursLoc[hoursLoc.length - j - 1] || '0';
+                    minutes[j].textContent = minutesLoc[minutesLoc.length - j - 1] || '0';
+                    seconds[j].textContent = secondsLoc[secondsLoc.length - j - 1] || '0';
+                }
+            }
+            setInterval(() => {
+                writeTime();
+            }, 1000);
+            writeTime();
+            function fixVid(){
+                if(window.innerHeight > vid.offsetHeight){
+                    vid.style.height = "100%";
+                    vid.style.width = "unset";
+                }
+                else if(window.innerWidth > vid.offsetWidth){
+                    vid.style.width = "100%";
+                    vid.style.height = "unset";
+                }
+            }
+            window.onresize = fixVid;
+            setTimeout(fixVid, 100);
+        </script>
+    </body>
+</html>
